@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@theme {
+  --color-green-500: #24ae7c;
+  --color-green-600: #0d2a1f;
+
+  --color-blue-500: #79b5ec;
+  --color-blue-600: #152432;
+
+  --color-red-500: #f37877;
+  --color-red-600: #3e1716;
+  --color-red-700: #f24e43;
+
+  --color-light-200: #e8e9e9;
+
+  --color-dark-200: #0d0f10;
+  --color-dark-300: #131619;
+  --color-dark-400: #1a1d21;
+  --color-dark-500: #363a3d;
+  --color-dark-600: #76828d;
+  --color-dark-700: #abb8c4;
+
+  /* Font family */
+  --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+}
+
+/* Define keyframes */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  50% {
+    opacity: 0;
+  }
+}
