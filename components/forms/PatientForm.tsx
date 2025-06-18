@@ -4,18 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { User, Mail, Phone, ArrowRight } from "lucide-react";
+import { Form } from "@/components/ui/form";
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -25,14 +15,12 @@ import {
 } from "@/components/ui/card";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-
-const UserFormValidation = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
-});
+import { UserFormValidation } from "@/lib/validation";
+import { useRouter } from "next/navigation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 export const PatientForm = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -53,14 +41,15 @@ export const PatientForm = () => {
         email: values.email,
         phone: values.phone,
       };
+      const newUser = await createUser(user);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("New user:", newUser);
 
-      console.log("User data:", user);
-      // Handle success - redirect or show success message
+      if (newUser) {
+        router.push(`/patients/${newUser.$id}/register`);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -85,7 +74,7 @@ export const PatientForm = () => {
               control={form.control}
               name="name"
               label="Full name"
-              placeholder="John Doe"
+              placeholder="Sam Smith"
               iconSrc="/assets/icons/user.svg"
               iconAlt="user"
             />
@@ -95,7 +84,7 @@ export const PatientForm = () => {
               control={form.control}
               name="email"
               label="Email"
-              placeholder="johndoe@gmail.com"
+              placeholder="samsmith@gmail.com"
               iconSrc="/assets/icons/email.svg"
               iconAlt="email"
             />
@@ -105,26 +94,8 @@ export const PatientForm = () => {
               control={form.control}
               name="phone"
               label="Phone number"
-              placeholder="(555) 123-4567"
+              placeholder="(+91) 999-999-9999"
             />
-
-            {/* <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-12 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 dark:from-blue-500 dark:to-green-500 dark:hover:from-blue-600 dark:hover:to-green-600 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:scale-100 shadow-lg hover:shadow-xl"
-            >
-              {isLoading ? (
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Getting Started...</span>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <span>Get Started</span>
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              )}
-            </Button> */}
             <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
           </form>
         </Form>
