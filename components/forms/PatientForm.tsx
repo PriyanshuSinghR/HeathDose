@@ -43,8 +43,6 @@ export const PatientForm = () => {
       };
       const newUser = await createUser(user);
 
-      console.log("New user:", newUser);
-
       if (newUser) {
         router.push(`/patients/${newUser.$id}/register`);
       }
@@ -56,12 +54,12 @@ export const PatientForm = () => {
   };
 
   return (
-    <Card className="border-0 shadow-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm  border-gray-200/20 dark:border-gray-700/20">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+    <Card className="border-0 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-gray-200/30 dark:border-gray-700/30 transition-all duration-300 hover:shadow-2xl">
+      <CardHeader className="px-8 pt-8 pb-6">
+        <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
           Hi there 👋
         </CardTitle>
-        <CardDescription className="text-base text-gray-600 dark:text-gray-300">
+        <CardDescription className="text-base text-gray-600 dark:text-gray-300/90 mt-2 leading-relaxed">
           Get started with appointments and take control of your health journey.
         </CardDescription>
       </CardHeader>
