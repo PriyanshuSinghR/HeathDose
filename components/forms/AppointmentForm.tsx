@@ -52,7 +52,7 @@ export const AppointmentForm = ({
     defaultValues: {
       primaryPhysician: appointment ? appointment?.primaryPhysician : "",
       schedule: appointment
-        ? new Date(appointment?.schedule!)
+        ? new Date(appointment?.schedule)
         : new Date(Date.now()),
       reason: appointment ? appointment.reason : "",
       note: appointment?.note || "",
@@ -105,7 +105,8 @@ export const AppointmentForm = ({
             primaryPhysician: values.primaryPhysician,
             schedule: new Date(values.schedule),
             status: status as Status,
-            cancellationReason: values.cancellationReason,
+            cancellationReason:
+              type === "cancel" ? values.cancellationReason : "",
           },
           type,
         };

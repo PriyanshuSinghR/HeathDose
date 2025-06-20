@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Doctors } from "@/constants";
 import { getAppointment } from "@/lib/actions/appointment.actions";
 import { formatDateTime } from "@/lib/utils";
+import Logo from "@/components/Logo";
 
 const RequestSuccess = async ({
   searchParams,
@@ -21,22 +22,7 @@ const RequestSuccess = async ({
     <div className=" flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
         <Link href="/">
-          <div className="flex justify-center items-center gap-2 mb-12">
-            <Image
-              src="/assets/icons/logo-icon.svg"
-              height={60}
-              width={60}
-              alt="patient"
-            />
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Health Dose
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 ">
-                Your health, our priority
-              </p>
-            </div>
-          </div>
+          <Logo className="mb-12" />
         </Link>
 
         <section className="flex flex-col items-center">

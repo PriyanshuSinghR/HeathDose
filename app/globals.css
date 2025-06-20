@@ -27,6 +27,10 @@
   /* Font family */
   --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 
+  --background-image-appointments: url("/assets/images/appointments-bg.png");
+  --background-image-pending: url("/assets/images/pending-bg.png");
+  --background-image-cancelled: url("/assets/images/cancelled-bg.png");
+
   /* Animations */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -168,6 +172,10 @@
   @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
 }
 
+@utility stat-card {
+  @apply flex flex-1 flex-col gap-6 rounded-2xl bg-cover p-6 shadow-lg;
+}
+
 @utility sidebar {
   @apply w-full max-w-72 flex-col overflow-auto  px-7 py-10;
 }
@@ -232,8 +240,20 @@
   }
 }
 
+@utility status-badge {
+  @apply flex w-fit items-center gap-2 rounded-full px-4 py-2;
+}
+
 @utility shad-error {
   @apply text-red-400!;
+}
+
+@utility data-table {
+  @apply z-10 w-full overflow-hidden rounded-lg border border-dark-400 shadow-lg;
+}
+
+@utility table-actions {
+  @apply flex w-full items-center justify-between space-x-2 p-4;
 }
 
 @utility shad-table {

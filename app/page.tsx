@@ -1,4 +1,5 @@
 import { PatientForm } from "@/components/forms/PatientForm";
+import Logo from "@/components/Logo";
 import { PasskeyModal } from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,22 +11,7 @@ const Home = ({ searchParams }: SearchParamProps) => {
       {isAdmin && <PasskeyModal />}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <div className="flex justify-center items-center gap-2 mb-12">
-            <Image
-              src="/assets/icons/logo-icon.svg"
-              height={60}
-              width={60}
-              alt="patient"
-            />
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Health Dose
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 ">
-                Your health, our priority
-              </p>
-            </div>
-          </div>
+          <Logo className="mb-12" />
 
           <PatientForm />
 
