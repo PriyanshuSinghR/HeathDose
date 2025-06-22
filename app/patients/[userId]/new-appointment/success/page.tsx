@@ -78,7 +78,7 @@ const RequestSuccess = async ({
           </Button>
         </section>
 
-        <p className="copyright">© 2024 Health Dose</p>
+        <p className="copyright">© 2025 Health Dose</p>
       </div>
     </div>
   );
