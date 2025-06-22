@@ -98,9 +98,16 @@ export const AppointmentForm = ({
           );
         }
       } else {
+        if (!appointment?.$id) {
+          console.error(
+            "Appointment ID is required for update/cancel operations"
+          );
+          setIsLoading(false);
+          return;
+        }
         const appointmentToUpdate = {
           userId,
-          appointmentId: appointment?.$id!,
+          appointmentId: appointment.$id!,
           appointment: {
             primaryPhysician: values.primaryPhysician,
             schedule: new Date(values.schedule),
@@ -114,12 +121,14 @@ export const AppointmentForm = ({
         const updatedAppointment = await updateAppointment(appointmentToUpdate);
 
         if (updatedAppointment) {
-          setOpen && setOpen(false);
+          if (setOpen) {
+            setOpen(false);
+          }
           form.reset();
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setIsLoading(false);
   };

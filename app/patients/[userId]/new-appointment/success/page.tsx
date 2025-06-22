@@ -6,6 +6,7 @@ import { Doctors } from "@/constants";
 import { getAppointment } from "@/lib/actions/appointment.actions";
 import { formatDateTime } from "@/lib/utils";
 import Logo from "@/components/Logo";
+import { redirect } from "next/navigation";
 
 const RequestSuccess = async ({
   searchParams,
@@ -14,6 +15,10 @@ const RequestSuccess = async ({
   const appointmentId = (searchParams?.appointmentId as string) || "";
   const appointment = await getAppointment(appointmentId);
 
+  if (!appointment) {
+    redirect(`/patients/${userId}/new-appointment`);
+  }
+
   const doctor = Doctors.find(
     (doctor) => doctor.name === appointment.primaryPhysician
   );
@@ -21,9 +26,7 @@ const RequestSuccess = async ({
   return (
     <div className=" flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
-        <Link href="/">
-          <Logo className="mb-12" />
-        </Link>
+        <Logo className="mb-12" />
 
         <section className="flex flex-col items-center">
           <Image
@@ -41,16 +44,19 @@ const RequestSuccess = async ({
 
         <section className="request-details">
           <p>Requested appointment details: </p>
-          <div className="flex items-center gap-3">
-            <Image
-              src={doctor?.image!}
-              alt="doctor"
-              width={100}
-              height={100}
-              className="size-6"
-            />
-            <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
-          </div>
+
+          {doctor && (
+            <div className="flex items-center gap-3">
+              <Image
+                src={doctor.image}
+                alt="doctor"
+                width={100}
+                height={100}
+                className="size-6"
+              />
+              <p className="whitespace-nowrap">Dr. {doctor.name}</p>
+            </div>
+          )}
           <div className="flex gap-2">
             <Image
               src="/assets/icons/calendar.svg"

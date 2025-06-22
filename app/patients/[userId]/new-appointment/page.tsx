@@ -3,9 +3,12 @@ import Image from "next/image";
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 import Logo from "@/components/Logo";
+import { redirect } from "next/navigation";
 
 const Appointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId);
+
+  if (!patient) redirect(`/patients/${userId}/register`);
 
   return (
     <div className="flex h-screen max-h-screen ">

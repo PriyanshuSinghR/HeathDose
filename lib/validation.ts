@@ -56,24 +56,15 @@ export const PatientFormValidation = z.object({
   identificationType: z.string().optional(),
   identificationNumber: z.string().optional(),
   identificationDocument: z.custom<File[]>().optional(),
-  treatmentConsent: z
-    .boolean()
-    .default(false)
-    .refine((value) => value === true, {
-      message: "You must consent to treatment in order to proceed",
-    }),
-  disclosureConsent: z
-    .boolean()
-    .default(false)
-    .refine((value) => value === true, {
-      message: "You must consent to disclosure in order to proceed",
-    }),
-  privacyConsent: z
-    .boolean()
-    .default(false)
-    .refine((value) => value === true, {
-      message: "You must consent to privacy in order to proceed",
-    }),
+  treatmentConsent: z.boolean().refine((value) => value === true, {
+    message: "You must consent to treatment in order to proceed",
+  }),
+  disclosureConsent: z.boolean().refine((value) => value === true, {
+    message: "You must consent to disclosure in order to proceed",
+  }),
+  privacyConsent: z.boolean().refine((value) => value === true, {
+    message: "You must consent to privacy in order to proceed",
+  }),
 });
 
 export const CreateAppointmentSchema = z.object({

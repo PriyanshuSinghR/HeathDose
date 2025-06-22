@@ -93,7 +93,9 @@ export const getPatient = async (userId: string) => {
       [Query.equal("userId", [userId])]
     );
 
-    return parseStringify(patients.documents[0]);
+    const patient = patients.documents[0] || null;
+
+    return parseStringify(patient);
   } catch (error) {
     console.error(
       "An error occurred while retrieving the patient details:",

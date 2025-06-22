@@ -11,7 +11,7 @@ const Home = ({ searchParams }: SearchParamProps) => {
       {isAdmin && <PasskeyModal />}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Logo className="mb-12" />
+          <Logo className="mb-12" isActive={false} />
 
           <PatientForm />
 

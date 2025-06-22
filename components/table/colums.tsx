@@ -61,14 +61,27 @@ export const columns: ColumnDef<Appointment>[] = [
 
       return (
         <div className="flex items-center gap-3">
-          <Image
-            src={doctor?.image!}
-            alt="doctor"
-            width={100}
-            height={100}
-            className="size-8"
-          />
-          <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
+          {doctor ? (
+            <>
+              <Image
+                src={doctor.image}
+                alt="doctor"
+                width={100}
+                height={100}
+                className="size-8"
+              />
+              <p className="whitespace-nowrap">Dr. {doctor.name}</p>
+            </>
+          ) : (
+            <>
+              <div className="size-8 bg-gray-200 rounded-full flex items-center justify-center">
+                <span className="text-xs">?</span>
+              </div>
+              <p className="whitespace-nowrap">
+                Dr. {appointment.primaryPhysician}
+              </p>
+            </>
+          )}
         </div>
       );
     },
@@ -78,8 +91,6 @@ export const columns: ColumnDef<Appointment>[] = [
     header: () => <div className="pl-4">Actions</div>,
     cell: ({ row }) => {
       const appointment = row.original;
-      console.log(appointment);
-
       return (
         <div className="flex gap-1">
           <AppointmentModal

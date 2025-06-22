@@ -24,7 +24,6 @@ import {
   IdentificationTypes,
   PatientFormDefaultValues,
 } from "@/constants";
-// import { registerPatient } from "@/lib/actions/patient.actions";
 import { PatientFormValidation } from "@/lib/validation";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -73,15 +72,14 @@ const RegisterForm = ({ user }: { user: User }) => {
         identificationDocument: values.identificationDocument
           ? formData
           : undefined,
-      };
-      // @ts-ignore
+      } as RegisterUserParams;
       const newPatient = await registerPatient(patientData);
 
       if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     setIsLoading(false);
