@@ -1,12 +1,86 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 import { StatCard } from "@/components/StatCard";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 import Logo from "@/components/Logo";
 import { DataTable } from "@/components/table/DataTable";
 import { columns } from "@/components/table/colums";
 import { ColumnDef } from "@tanstack/react-table";
+import { decryptKey } from "@/lib/utils";
 
-const AdminPage = async () => {
-  const appointments = await getRecentAppointmentList();
+const AdminPage = () => {
+  const [appointments, setAppointments] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const statCards = [
+    {
+      type: "appointments" as const,
+      count: appointments.scheduledCount,
+      label: "Scheduled appointments",
+      icon: "/assets/icons/appointments.svg",
+    },
+    {
+      type: "pending" as const,
+      count: appointments.pendingCount,
+      label: "Pending appointments",
+      icon: "/assets/icons/pending.svg",
+    },
+    {
+      type: "cancelled" as const,
+      count: appointments.cancelledCount,
+      label: "Cancelled appointments",
+      icon: "/assets/icons/cancelled.svg",
+    },
+  ];
+
+  useEffect(() => {
+    const encryptedKey =
+      typeof window !== "undefined"
+        ? window.localStorage.getItem("accessKey")
+        : null;
+
+    const accessKey = encryptedKey && decryptKey(encryptedKey);
+
+    if (accessKey !== process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
+      redirect("/");
+      return;
+    }
+
+    setIsAuthenticated(true);
+
+    const fetchAppointments = async () => {
+      try {
+        const appointmentData = await getRecentAppointmentList();
+        setAppointments(appointmentData);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+        setAppointments(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
+
+  if (isLoading || !isAuthenticated) {
+    return (
+      <div className="mx-auto flex max-w-7xl flex-col space-y-14">
+        <header className="admin-header">
+          <Logo />
+          <p className="text-16-semibold">Admin Dashboard</p>
+        </header>
+        <main className="admin-main">
+          <div className="text-center">
+            <h1 className="header">Loading...</h1>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   if (!appointments) {
     return (
@@ -29,7 +103,6 @@ const AdminPage = async () => {
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
         <Logo />
-
         <p className="text-16-semibold">Admin Dashboard</p>
       </header>
 
@@ -42,24 +115,15 @@ const AdminPage = async () => {
         </section>
 
         <section className="admin-stat">
-          <StatCard
-            type="appointments"
-            count={appointments.scheduledCount}
-            label="Scheduled appointments"
-            icon={"/assets/icons/appointments.svg"}
-          />
-          <StatCard
-            type="pending"
-            count={appointments.pendingCount}
-            label="Pending appointments"
-            icon={"/assets/icons/pending.svg"}
-          />
-          <StatCard
-            type="cancelled"
-            count={appointments.cancelledCount}
-            label="Cancelled appointments"
-            icon={"/assets/icons/cancelled.svg"}
-          />
+          {statCards.map((stat) => (
+            <StatCard
+              key={stat.type}
+              type={stat.type}
+              count={stat.count}
+              label={stat.label}
+              icon={stat.icon}
+            />
+          ))}
         </section>
 
         <DataTable

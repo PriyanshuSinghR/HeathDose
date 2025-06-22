@@ -28,6 +28,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { Form } from "../ui/form";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 export const AppointmentForm = ({
   userId,
@@ -148,13 +150,18 @@ export const AppointmentForm = ({
   return (
     <Card className="border-0 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-gray-200/30 dark:border-gray-700/30 transition-all duration-300 hover:shadow-2xl">
       {type === "create" && (
-        <CardHeader className="px-8 pt-8 pb-6">
-          <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
-            New Appointment
-          </CardTitle>
-          <CardDescription className="text-base text-gray-600 dark:text-gray-300/90 mt-2 leading-relaxed">
-            Request a new appointment in 10 seconds.
-          </CardDescription>
+        <CardHeader className="flex justify-between items-center">
+          <div className="px-8 pt-8 pb-6">
+            <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+              New Appointment
+            </CardTitle>
+            <CardDescription className="text-base text-gray-600 dark:text-gray-300/90 mt-2 leading-relaxed">
+              Request a new appointment in 10 seconds.
+            </CardDescription>
+          </div>
+          <Button variant="outline" className="shad-primary-btn" asChild>
+            <Link href={`/patients/${userId}/dashboard`}>Dashboard</Link>
+          </Button>
         </CardHeader>
       )}
 
