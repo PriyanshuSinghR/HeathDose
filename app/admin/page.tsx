@@ -15,27 +15,6 @@ const AdminPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const statCards = [
-    {
-      type: "appointments" as const,
-      count: appointments.scheduledCount,
-      label: "Scheduled appointments",
-      icon: "/assets/icons/appointments.svg",
-    },
-    {
-      type: "pending" as const,
-      count: appointments.pendingCount,
-      label: "Pending appointments",
-      icon: "/assets/icons/pending.svg",
-    },
-    {
-      type: "cancelled" as const,
-      count: appointments.cancelledCount,
-      label: "Cancelled appointments",
-      icon: "/assets/icons/cancelled.svg",
-    },
-  ];
-
   useEffect(() => {
     const encryptedKey =
       typeof window !== "undefined"
@@ -98,6 +77,27 @@ const AdminPage = () => {
       </div>
     );
   }
+
+  const statCards = [
+    {
+      type: "appointments" as const,
+      count: appointments.scheduledCount,
+      label: "Scheduled appointments",
+      icon: "/assets/icons/appointments.svg",
+    },
+    {
+      type: "pending" as const,
+      count: appointments.pendingCount,
+      label: "Pending appointments",
+      icon: "/assets/icons/pending.svg",
+    },
+    {
+      type: "cancelled" as const,
+      count: appointments.cancelledCount,
+      label: "Cancelled appointments",
+      icon: "/assets/icons/cancelled.svg",
+    },
+  ];
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
